@@ -19,7 +19,7 @@ export default function Home() {
   const [incomeType, setIncomeType] = useState("annual"); // "annual" | "hourly"
 
   // Annual inputs
-  const [annualSalary, setAnnualSalary] = useState(100000);
+  const [annualSalary, setAnnualSalary] = useState("100000");
 
   // Hourly inputs
   const [hourlyWage, setHourlyWage] = useState(30);
@@ -96,12 +96,17 @@ export default function Home() {
         <label style={{ display: "block", marginTop: 16 }}>
           Annual Salary ($)
           <input
-            type="number"
-            value={annualSalary}
-            onChange={(e) => setAnnualSalary(Number(e.target.value))}
-            style={{ width: "100%", padding: 10, marginTop: 6 }}
-            min="0"
-          />
+  type="text"
+  inputMode="numeric"
+  value={annualSalary}
+  onChange={(e) => {
+    const val = e.target.value.replace(/[^\d]/g, "");
+    setAnnualSalary(val);
+  }}
+  style={{ width: "100%", padding: 10, marginTop: 6 }}
+  placeholder="e.g. 75000"
+/>
+
         </label>
       ) : (
         <div style={{ marginTop: 16, display: "grid", gap: 12 }}>
