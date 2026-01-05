@@ -14,14 +14,26 @@ function fmtMoney(n) {
   return (Number(n) || 0).toLocaleString(undefined, { maximumFractionDigits: 2 });
 }
 
+// Format a numeric string with commas, preserving optional decimals
+function formatWithCommas(value) {
+  if (!value) return "";
+  const parts = String(value).split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+
+function stripCommas(value) {
+  return String(value || "").replace(/,/g, "");
+}
+
 export default function Home() {
   // Input mode
   const [incomeType, setIncomeType] = useState("annual"); // "annual" | "hourly"
 
-  // Annual input (string so typing replaces cleanly)
+  // Annual input (store raw digits only; render with commas)
   const [annualSalary, setAnnualSalary] = useState("100000");
 
-  // Hourly inputs (strings so typing replaces cleanly)
+  // Hourly inputs (store raw; render with commas; hourly allows decimals)
   const [hourlyWage, setHourlyWage] = useState("30");
   const [hoursPerWeek, setHoursPerWeek] = useState("40");
   const [weeksPerYear, setWeeksPerYear] = useState("52");
@@ -35,12 +47,12 @@ export default function Home() {
   // Convert inputs -> annual salary for the engine
   const salary = useMemo(() => {
     if (incomeType === "hourly") {
-      const h = Math.max(0, Number(hourlyWage || 0));
-      const hpw = Math.max(0, Number(hoursPerWeek || 0));
-      const wpy = Math.max(0, Number(weeksPerYear || 0));
+      const h = Math.max(0, Number(stripCommas(hourlyWage) || 0));
+      const hpw = Math.max(0, Number(stripCommas(hoursPerWeek) || 0));
+      const wpy = Math.max(0, Number(stripCommas(weeksPerYear) || 0));
       return h * hpw * wpy;
     }
-    return Math.max(0, Number(annualSalary || 0));
+    return Math.max(0, Number(stripCommas(annualSalary) || 0));
   }, [incomeType, hourlyWage, hoursPerWeek, weeksPerYear, annualSalary]);
 
   const result = useMemo(() => {
@@ -98,13 +110,13 @@ export default function Home() {
           <input
             type="text"
             inputMode="numeric"
-            value={annualSalary}
+            value={formatWithCommas(annualSalary)}
             onChange={(e) => {
-              const v = e.target.value.replace(/[^\d]/g, "");
-              setAnnualSalary(v);
+              const raw = stripCommas(e.target.value).replace(/[^\d]/g, "");
+              setAnnualSalary(raw);
             }}
             style={{ width: "100%", padding: 10, marginTop: 6 }}
-            placeholder="e.g. 75000"
+            placeholder="e.g. 75,000"
           />
         </label>
       ) : (
@@ -114,13 +126,12 @@ export default function Home() {
             <input
               type="text"
               inputMode="decimal"
-              value={hourlyWage}
+              value={formatWithCommas(hourlyWage)}
               onChange={(e) => {
-                // allow digits and ONE decimal point
-                let v = e.target.value.replace(/[^\d.]/g, "");
-                const parts = v.split(".");
-                if (parts.length > 2) v = parts[0] + "." + parts.slice(1).join("");
-                setHourlyWage(v);
+                let raw = stripCommas(e.target.value).replace(/[^\d.]/g, "");
+                const parts = raw.split(".");
+                if (parts.length > 2) raw = parts[0] + "." + parts.slice(1).join("");
+                setHourlyWage(raw);
               }}
               style={{ width: "100%", padding: 10, marginTop: 6 }}
               placeholder="e.g. 30 or 30.50"
@@ -133,10 +144,10 @@ export default function Home() {
               <input
                 type="text"
                 inputMode="numeric"
-                value={hoursPerWeek}
+                value={formatWithCommas(hoursPerWeek)}
                 onChange={(e) => {
-                  const v = e.target.value.replace(/[^\d]/g, "");
-                  setHoursPerWeek(v);
+                  const raw = stripCommas(e.target.value).replace(/[^\d]/g, "");
+                  setHoursPerWeek(raw);
                 }}
                 style={{ width: "100%", padding: 10, marginTop: 6 }}
                 placeholder="e.g. 40"
@@ -148,10 +159,10 @@ export default function Home() {
               <input
                 type="text"
                 inputMode="numeric"
-                value={weeksPerYear}
+                value={formatWithCommas(weeksPerYear)}
                 onChange={(e) => {
-                  const v = e.target.value.replace(/[^\d]/g, "");
-                  setWeeksPerYear(v);
+                  const raw = stripCommas(e.target.value).replace(/[^\d]/g, "");
+                  setWeeksPerYear(raw);
                 }}
                 style={{ width: "100%", padding: 10, marginTop: 6 }}
                 placeholder="e.g. 52"
