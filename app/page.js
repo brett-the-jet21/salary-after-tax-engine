@@ -10,8 +10,11 @@ const PAY_PERIODS = {
   weekly: 52
 };
 
-function fmtMoney(n) {
-  return (Number(n) || 0).toLocaleString(undefined, { maximumFractionDigits: 2 });
+function fmtMoney2(n) {
+  return (Number(n) || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
 
 // Format a numeric string with commas, preserving optional decimals
@@ -27,24 +30,19 @@ function stripCommas(value) {
 }
 
 export default function Home() {
-  // Input mode
   const [incomeType, setIncomeType] = useState("annual"); // "annual" | "hourly"
 
-  // Annual input (store raw digits only; render with commas)
+  // Store raw digits (no commas) for annual; render with commas
   const [annualSalary, setAnnualSalary] = useState("100000");
 
-  // Hourly inputs (store raw; render with commas; hourly allows decimals)
+  // Store raw (no commas); hourly allows decimals
   const [hourlyWage, setHourlyWage] = useState("30");
   const [hoursPerWeek, setHoursPerWeek] = useState("40");
   const [weeksPerYear, setWeeksPerYear] = useState("52");
 
-  // Tax settings
   const [filingStatus, setFilingStatus] = useState("single"); // "single" | "married" | "hoh"
-
-  // Output settings
   const [payPeriod, setPayPeriod] = useState("annual"); // "annual" | "monthly" | "biweekly" | "weekly"
 
-  // Convert inputs -> annual salary for the engine
   const salary = useMemo(() => {
     if (incomeType === "hourly") {
       const h = Math.max(0, Number(stripCommas(hourlyWage) || 0));
@@ -63,6 +61,21 @@ export default function Home() {
   }, [salary, filingStatus]);
 
   const divisor = PAY_PERIODS[payPeriod] || 1;
+
+  // Pay-period breakdown values
+  const takeHomePP = result.takeHome / divisor;
+  const federalPP = result.federal / divisor;
+  const statePP = result.state / divisor;
+  const ficaPP = result.fica / divisor;
+  const sdiPP = result.sdi / divisor;
+
+  // Nice label
+  const payPeriodLabel = useMemo(() => {
+    if (payPeriod === "biweekly") return "Bi-weekly";
+    if (payPeriod === "weekly") return "Weekly";
+    if (payPeriod === "monthly") return "Monthly";
+    return "Annual";
+  }, [payPeriod]);
 
   return (
     <main style={{ maxWidth: 880, margin: "40px auto", padding: 16, fontFamily: "Arial" }}>
@@ -171,7 +184,7 @@ export default function Home() {
           </div>
 
           <div style={{ fontSize: 13, color: "#666" }}>
-            Annualized salary used for taxes: <strong>${fmtMoney(salary)}</strong>
+            Annualized salary used for taxes: <strong>${fmtMoney2(salary)}</strong>
           </div>
         </div>
       )}
@@ -207,18 +220,16 @@ export default function Home() {
 
       {/* Results */}
       <div style={{ marginTop: 24, padding: 16, border: "1px solid #ddd", borderRadius: 10 }}>
-        <div style={{ fontSize: 14, color: "#666" }}>Take-Home Pay ({payPeriod})</div>
-        <div style={{ fontSize: 34, fontWeight: 700 }}>
-          ${fmtMoney(result.takeHome / divisor)}
-        </div>
+        <div style={{ fontSize: 14, color: "#666" }}>Take-Home Pay ({payPeriodLabel})</div>
+        <div style={{ fontSize: 34, fontWeight: 700 }}>${fmtMoney2(takeHomePP)}</div>
       </div>
 
-      <h2 style={{ marginTop: 28 }}>Annual Tax Breakdown</h2>
+      <h2 style={{ marginTop: 28 }}>Tax Breakdown ({payPeriodLabel})</h2>
       <ul style={{ lineHeight: 1.8 }}>
-        <li>Federal Tax: ${fmtMoney(result.federal)}</li>
-        <li>California Tax: ${fmtMoney(result.state)}</li>
-        <li>FICA: ${fmtMoney(result.fica)}</li>
-        <li>CA SDI: ${fmtMoney(result.sdi)}</li>
+        <li>Federal Tax: ${fmtMoney2(federalPP)}</li>
+        <li>California Tax: ${fmtMoney2(statePP)}</li>
+        <li>FICA: ${fmtMoney2(ficaPP)}</li>
+        <li>CA SDI: ${fmtMoney2(sdiPP)}</li>
       </ul>
 
       <p style={{ marginTop: 32, fontSize: 13, color: "#666" }}>
