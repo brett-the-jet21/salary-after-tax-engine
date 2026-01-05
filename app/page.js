@@ -28,7 +28,7 @@ function stripCommas(value) {
   return String(value || "").replace(/,/g, "");
 }
 
-/* -------------------- STYLES (FIXED OVERFLOW) -------------------- */
+/* -------------------- STYLES -------------------- */
 
 const pageWrapStyle = {
   minHeight: "100vh",
@@ -125,6 +125,15 @@ const resultCardStyle = {
   border: "1px solid #e6e6e6",
   borderRadius: 14,
   background: "#fafafa"
+};
+
+const footnoteStyle = {
+  marginTop: 18,
+  paddingTop: 12,
+  borderTop: "1px solid #eee",
+  fontSize: 12,
+  color: "#666",
+  lineHeight: 1.5
 };
 
 /* -------------------- COMPONENT -------------------- */
@@ -271,7 +280,8 @@ export default function Home() {
               <option value="qss">Qualifying Surviving Spouse</option>
             </select>
             <div style={helperTextStyle}>
-              QSS uses the same tax brackets as Married Filing Jointly.
+              Qualifying Surviving Spouse uses the same tax brackets as Married
+              Filing Jointly.
             </div>
           </label>
 
@@ -303,6 +313,15 @@ export default function Home() {
             <li>FICA: ${fmtMoney2(result.fica / divisor)}</li>
             <li>CA SDI: ${fmtMoney2(result.sdi / divisor)}</li>
           </ul>
+
+          {/* ✅ FOOTNOTE RESTORED */}
+          <div style={footnoteStyle}>
+            Estimates are based on current federal and California tax brackets
+            and standard deductions. Results do not include itemized deductions,
+            tax credits, pre-tax benefits, retirement contributions, or employer-
+            sponsored deductions. This calculator is for informational purposes
+            only and should not be considered tax advice.
+          </div>
         </div>
       </div>
     </div>
