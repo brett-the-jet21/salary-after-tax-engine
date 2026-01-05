@@ -40,8 +40,10 @@ export default function Home() {
   const [hoursPerWeek, setHoursPerWeek] = useState("40");
   const [weeksPerYear, setWeeksPerYear] = useState("52");
 
-  const [filingStatus, setFilingStatus] = useState("single"); // "single" | "married" | "hoh"
-  const [payPeriod, setPayPeriod] = useState("annual"); // "annual" | "monthly" | "biweekly" | "weekly"
+  // Filing statuses: single, married (MFJ), mfs, hoh, qss
+  const [filingStatus, setFilingStatus] = useState("single");
+
+  const [payPeriod, setPayPeriod] = useState("annual"); // annual | monthly | biweekly | weekly
 
   const salary = useMemo(() => {
     if (incomeType === "hourly") {
@@ -69,7 +71,6 @@ export default function Home() {
   const ficaPP = result.fica / divisor;
   const sdiPP = result.sdi / divisor;
 
-  // Nice label
   const payPeriodLabel = useMemo(() => {
     if (payPeriod === "biweekly") return "Bi-weekly";
     if (payPeriod === "weekly") return "Weekly";
@@ -199,8 +200,13 @@ export default function Home() {
         >
           <option value="single">Single</option>
           <option value="married">Married Filing Jointly</option>
+          <option value="mfs">Married Filing Separately</option>
           <option value="hoh">Head of Household</option>
+          <option value="qss">Qualifying Surviving Spouse</option>
         </select>
+        <div style={{ marginTop: 6, fontSize: 12, color: "#666" }}>
+          Note: Qualifying Surviving Spouse uses the same tax brackets as Married Filing Jointly.
+        </div>
       </label>
 
       {/* Output Pay Period */}
