@@ -136,6 +136,37 @@ const footnoteStyle = {
   lineHeight: 1.5
 };
 
+const seoWrapStyle = {
+  marginTop: 26,
+  paddingTop: 18,
+  borderTop: "1px solid #eee",
+  lineHeight: 1.6
+};
+
+const seoH2Style = {
+  marginTop: 16,
+  marginBottom: 8,
+  fontSize: 18
+};
+
+const seoPStyle = {
+  marginTop: 0,
+  marginBottom: 10,
+  color: "#222"
+};
+
+const seoUlStyle = {
+  marginTop: 0,
+  marginBottom: 10,
+  paddingLeft: 18
+};
+
+const seoDisclaimerStyle = {
+  marginTop: 10,
+  fontSize: 12,
+  color: "#666"
+};
+
 /* -------------------- COMPONENT -------------------- */
 
 export default function Home() {
@@ -313,6 +344,71 @@ export default function Home() {
             <li>FICA: ${fmtMoney2(result.fica / divisor)}</li>
             <li>CA SDI: ${fmtMoney2(result.sdi / divisor)}</li>
           </ul>
+
+          {/* -------------------- SEO CONTENT -------------------- */}
+          <section style={seoWrapStyle} aria-label="California tax calculator details">
+            <h2 style={seoH2Style}>How California Salary After-Tax Pay Is Calculated</h2>
+            <p style={seoPStyle}>
+              Your take-home pay in California is estimated by applying both{" "}
+              <strong>federal</strong> and <strong>state</strong> taxes, along with
+              required payroll deductions. This calculator estimates net pay based on:
+            </p>
+            <ul style={seoUlStyle}>
+              <li>Federal income tax, based on IRS tax brackets</li>
+              <li>California state income tax, which is progressive</li>
+              <li>Social Security and Medicare (FICA taxes)</li>
+              <li>Standard deduction assumptions</li>
+              <li>Filing status (Single, Married Filing Jointly, etc.)</li>
+              <li>Pre-tax deductions such as 401(k) or health insurance (if applicable)</li>
+            </ul>
+
+            <h2 style={seoH2Style}>California Take-Home Pay Example</h2>
+            <p style={seoPStyle}>
+              As a simple reference point, a <strong>$100,000</strong> annual salary in California
+              often results in roughly <strong>$68,000–$72,000</strong> in take-home pay, depending
+              on filing status, benefits, and deductions. Your results may vary based on your
+              specific situation.
+            </p>
+
+            <h2 style={seoH2Style}>Salary vs Hourly Pay in California</h2>
+            <p style={seoPStyle}>
+              Hourly and salaried employees can see different paycheck amounts even with similar
+              annual earnings:
+            </p>
+            <ul style={seoUlStyle}>
+              <li>Hourly pay is commonly estimated using <strong>2,080 hours</strong> per year</li>
+              <li>Overtime can increase taxable income and withholding</li>
+              <li>Pay frequency affects paycheck size, not total taxes owed</li>
+            </ul>
+
+            <h2 style={seoH2Style}>How Filing Status Affects California Taxes</h2>
+            <p style={seoPStyle}>
+              Filing status affects your tax brackets and how much is withheld:
+            </p>
+            <ul style={seoUlStyle}>
+              <li>Single filers generally reach higher marginal rates sooner</li>
+              <li>Married filing jointly may benefit from wider tax brackets</li>
+              <li>Head of household can reduce taxable income</li>
+              <li>Married filing separately often results in higher total taxes</li>
+            </ul>
+
+            <h2 style={seoH2Style}>Why California Paychecks Are Lower Than Expected</h2>
+            <p style={seoPStyle}>
+              Many workers are surprised by the gap between gross pay and take-home pay. Common
+              reasons include:
+            </p>
+            <ul style={seoUlStyle}>
+              <li>Progressive California income tax brackets</li>
+              <li>Mandatory FICA payroll deductions</li>
+              <li>Employer withholding assumptions</li>
+              <li>Benefits and retirement contributions</li>
+            </ul>
+
+            <p style={seoDisclaimerStyle}>
+              Updated for the 2026 tax year. Estimates are for informational purposes only.
+            </p>
+          </section>
+          {/* ------------------ END SEO CONTENT ------------------ */}
 
           {/* ✅ FOOTNOTE RESTORED */}
           <div style={footnoteStyle}>
