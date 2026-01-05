@@ -22,9 +22,9 @@ export default function Home() {
   const [annualSalary, setAnnualSalary] = useState("100000");
 
   // Hourly inputs
-  const [hourlyWage, setHourlyWage] = useState(30);
-  const [hoursPerWeek, setHoursPerWeek] = useState(40);
-  const [weeksPerYear, setWeeksPerYear] = useState(52);
+  const [hourlyWage, setHourlyWage] = useState("30");
+const [hoursPerWeek, setHoursPerWeek] = useState("40");
+const [weeksPerYear, setWeeksPerYear] = useState("52");
 
   // Tax settings
   const [filingStatus, setFilingStatus] = useState("single"); // "single" | "married" | "hoh"
@@ -113,38 +113,51 @@ export default function Home() {
           <label>
             Hourly Wage ($/hr)
             <input
-              type="number"
-              value={hourlyWage}
-              onChange={(e) => setHourlyWage(Number(e.target.value))}
-              style={{ width: "100%", padding: 10, marginTop: 6 }}
-              min="0"
-              step="0.01"
-            />
+  type="text"
+  inputMode="decimal"
+  value={hourlyWage}
+  onChange={(e) => {
+    // allow digits and ONE decimal point
+    let v = e.target.value.replace(/[^\d.]/g, "");
+    const parts = v.split(".");
+    if (parts.length > 2) v = parts[0] + "." + parts.slice(1).join("");
+    setHourlyWage(v);
+  }}
+  style={{ width: "100%", padding: 10, marginTop: 6 }}
+  placeholder="e.g. 30 or 30.50"
+/>
+
           </label>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <label>
               Hours / Week
               <input
-                type="number"
-                value={hoursPerWeek}
-                onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-                style={{ width: "100%", padding: 10, marginTop: 6 }}
-                min="0"
-                step="0.5"
-              />
+  type="text"
+  inputMode="numeric"
+  value={hoursPerWeek}
+  onChange={(e) => {
+    const v = e.target.value.replace(/[^\d]/g, "");
+    setHoursPerWeek(v);
+  }}
+  style={{ width: "100%", padding: 10, marginTop: 6 }}
+  placeholder="e.g. 40"
+/>
             </label>
 
             <label>
               Weeks / Year
               <input
-                type="number"
-                value={weeksPerYear}
-                onChange={(e) => setWeeksPerYear(Number(e.target.value))}
-                style={{ width: "100%", padding: 10, marginTop: 6 }}
-                min="0"
-                step="1"
-              />
+  type="text"
+  inputMode="numeric"
+  value={weeksPerYear}
+  onChange={(e) => {
+    const v = e.target.value.replace(/[^\d]/g, "");
+    setWeeksPerYear(v);
+  }}
+  style={{ width: "100%", padding: 10, marginTop: 6 }}
+  placeholder="e.g. 52"
+/>
             </label>
           </div>
 
