@@ -27,6 +27,16 @@ const FEDERAL_BRACKETS = {
     [231250, 0.32],
     [578100, 0.35],
     [Infinity, 0.37]
+  ],
+  // Married Filing Separately: same as Single for brackets (federal)
+  mfs: [
+    [11000, 0.10],
+    [44725, 0.12],
+    [95375, 0.22],
+    [182100, 0.24],
+    [231250, 0.32],
+    [346875, 0.35],
+    [Infinity, 0.37]
   ]
 };
 
@@ -63,19 +73,37 @@ const CA_BRACKETS = {
     [569790, 0.103],
     [949649, 0.113],
     [Infinity, 0.123]
+  ],
+  // CA MFS effectively uses single schedule for our purposes here
+  mfs: [
+    [10412, 0.01],
+    [24684, 0.02],
+    [38959, 0.04],
+    [54081, 0.06],
+    [68350, 0.08],
+    [349137, 0.093],
+    [418961, 0.103],
+    [698271, 0.113],
+    [Infinity, 0.123]
   ]
 };
 
 const FEDERAL_DEDUCTION = {
   single: 13850,
   married: 27700,
-  hoh: 20800
+  hoh: 20800,
+  mfs: 13850,
+  // Qualifying Surviving Spouse uses MFJ deduction
+  qss: 27700
 };
 
 const CA_DEDUCTION = {
   single: 5202,
   married: 10404,
-  hoh: 10404
+  hoh: 10404,
+  mfs: 5202,
+  // QSS treated like MFJ for deduction
+  qss: 10404
 };
 
 function calculateProgressiveTax(income, brackets) {
@@ -91,22 +119,27 @@ function calculateProgressiveTax(income, brackets) {
   return tax;
 }
 
-export function calculateCaliforniaTakeHome({
-  salary,
-  filingStatus
-}) {
-  const s = Math.max(0, salary);
+export function calculateCaliforniaTakeHome({ salary, filingStatus }) {
+  const s = Math.max(0, Number(salary || 0));
 
-  const fedTaxable = Math.max(0, s - FEDERAL_DEDUCTION[filingStatus]);
-  const caTaxable = Math.max(0, s - CA_DEDUCTION[filingStatus]);
+  // Map Qualifying Surviving Spouse to MFJ brackets
+  const status = filingStatus === "qss" ? "married" : filingStatus;
 
-  const federal = calculateProgressiveTax(fedTaxable, FEDERAL_BRACKETS[filingStatus]);
-  const state = calculateProgressiveTax(caTaxable, CA_BRACKETS[filingStatus]);
+  const fedDeduction = FEDERAL_DEDUCTION[filingStatus] ?? FEDERAL_DEDUCTION[status] ?? 0;
+  const caDeduction = CA_DEDUCTION[filingStatus] ?? CA_DEDUCTION[status] ?? 0;
 
+  const fedTaxable = Math.max(0, s - fedDeduction);
+  const caTaxable = Math.max(0, s - caDeduction);
+
+  const federal = calculateProgressiveTax(fedTaxable, FEDERAL_BRACKETS[status]);
+  const state = calculateProgressiveTax(caTaxable, CA_BRACKETS[status]);
+
+  // FICA
   const socialSecurity = Math.min(s, 168600) * 0.062;
   const medicare = s * 0.0145;
   const fica = socialSecurity + medicare;
 
+  // CA SDI (simple placeholder rate)
   const sdi = s * 0.013;
 
   const totalTax = federal + state + fica + sdi;
