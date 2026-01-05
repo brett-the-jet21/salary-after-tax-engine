@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { calculateCaliforniaTakeHome } from "../lib/californiaTax";
+import { calculateCaliforniaTakeHome } from "./lib/californiaTax";
 
 export default function Home() {
   const [salary, setSalary] = useState(100000);
