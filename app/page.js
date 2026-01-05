@@ -18,13 +18,13 @@ export default function Home() {
   // Input mode
   const [incomeType, setIncomeType] = useState("annual"); // "annual" | "hourly"
 
-  // Annual inputs
+  // Annual input (string so typing replaces cleanly)
   const [annualSalary, setAnnualSalary] = useState("100000");
 
-  // Hourly inputs
+  // Hourly inputs (strings so typing replaces cleanly)
   const [hourlyWage, setHourlyWage] = useState("30");
-const [hoursPerWeek, setHoursPerWeek] = useState("40");
-const [weeksPerYear, setWeeksPerYear] = useState("52");
+  const [hoursPerWeek, setHoursPerWeek] = useState("40");
+  const [weeksPerYear, setWeeksPerYear] = useState("52");
 
   // Tax settings
   const [filingStatus, setFilingStatus] = useState("single"); // "single" | "married" | "hoh"
@@ -96,68 +96,66 @@ const [weeksPerYear, setWeeksPerYear] = useState("52");
         <label style={{ display: "block", marginTop: 16 }}>
           Annual Salary ($)
           <input
-  type="text"
-  inputMode="numeric"
-  value={annualSalary}
-  onChange={(e) => {
-    const val = e.target.value.replace(/[^\d]/g, "");
-    setAnnualSalary(val);
-  }}
-  style={{ width: "100%", padding: 10, marginTop: 6 }}
-  placeholder="e.g. 75000"
-/>
-
+            type="text"
+            inputMode="numeric"
+            value={annualSalary}
+            onChange={(e) => {
+              const v = e.target.value.replace(/[^\d]/g, "");
+              setAnnualSalary(v);
+            }}
+            style={{ width: "100%", padding: 10, marginTop: 6 }}
+            placeholder="e.g. 75000"
+          />
         </label>
       ) : (
         <div style={{ marginTop: 16, display: "grid", gap: 12 }}>
           <label>
             Hourly Wage ($/hr)
             <input
-  type="text"
-  inputMode="decimal"
-  value={hourlyWage}
-  onChange={(e) => {
-    // allow digits and ONE decimal point
-    let v = e.target.value.replace(/[^\d.]/g, "");
-    const parts = v.split(".");
-    if (parts.length > 2) v = parts[0] + "." + parts.slice(1).join("");
-    setHourlyWage(v);
-  }}
-  style={{ width: "100%", padding: 10, marginTop: 6 }}
-  placeholder="e.g. 30 or 30.50"
-/>
-
+              type="text"
+              inputMode="decimal"
+              value={hourlyWage}
+              onChange={(e) => {
+                // allow digits and ONE decimal point
+                let v = e.target.value.replace(/[^\d.]/g, "");
+                const parts = v.split(".");
+                if (parts.length > 2) v = parts[0] + "." + parts.slice(1).join("");
+                setHourlyWage(v);
+              }}
+              style={{ width: "100%", padding: 10, marginTop: 6 }}
+              placeholder="e.g. 30 or 30.50"
+            />
           </label>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <label>
               Hours / Week
               <input
-  type="text"
-  inputMode="numeric"
-  value={hoursPerWeek}
-  onChange={(e) => {
-    const v = e.target.value.replace(/[^\d]/g, "");
-    setHoursPerWeek(v);
-  }}
-  style={{ width: "100%", padding: 10, marginTop: 6 }}
-  placeholder="e.g. 40"
-/>
+                type="text"
+                inputMode="numeric"
+                value={hoursPerWeek}
+                onChange={(e) => {
+                  const v = e.target.value.replace(/[^\d]/g, "");
+                  setHoursPerWeek(v);
+                }}
+                style={{ width: "100%", padding: 10, marginTop: 6 }}
+                placeholder="e.g. 40"
+              />
             </label>
 
             <label>
               Weeks / Year
               <input
-  type="text"
-  inputMode="numeric"
-  value={weeksPerYear}
-  onChange={(e) => {
-    const v = e.target.value.replace(/[^\d]/g, "");
-    setWeeksPerYear(v);
-  }}
-  style={{ width: "100%", padding: 10, marginTop: 6 }}
-  placeholder="e.g. 52"
-/>
+                type="text"
+                inputMode="numeric"
+                value={weeksPerYear}
+                onChange={(e) => {
+                  const v = e.target.value.replace(/[^\d]/g, "");
+                  setWeeksPerYear(v);
+                }}
+                style={{ width: "100%", padding: 10, marginTop: 6 }}
+                placeholder="e.g. 52"
+              />
             </label>
           </div>
 
