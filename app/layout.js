@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title: "California Salary After Tax Calculator",
   description:
