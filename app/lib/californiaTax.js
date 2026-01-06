@@ -119,14 +119,43 @@ function calculateProgressiveTax(income, brackets) {
   return tax;
 }
 
+/**
+ * Shared helper: calculate federal income tax + FICA only.
+ * This lets other states (like Texas) reuse your exact federal/FICA logic.
+ */
+export function calculateFederalAndFica({ annualGross, filingStatus }) {
+  const s = Math.max(0, Number(annualGross || 0));
+
+  // Map Qualifying Surviving Spouse to MFJ brackets for rate schedule
+  const status = filingStatus === "qss" ? "married" : filingStatus;
+
+  const fedDeduction =
+    FEDERAL_DEDUCTION[filingStatus] ?? FEDERAL_DEDUCTION[status] ?? 0;
+
+  const fedTaxable = Math.max(0, s - fedDeduction);
+  const federalAnnual = calculateProgressiveTax(fedTaxable, FEDERAL_BRACKETS[status]);
+
+  // FICA (Social Security + Medicare). Note: no Additional Medicare tax in this simplified model.
+  const socialSecurity = Math.min(s, 168600) * 0.062;
+  const medicare = s * 0.0145;
+  const ficaAnnual = socialSecurity + medicare;
+
+  return {
+    federalAnnual,
+    ficaAnnual
+  };
+}
+
 export function calculateCaliforniaTakeHome({ salary, filingStatus }) {
   const s = Math.max(0, Number(salary || 0));
 
   // Map Qualifying Surviving Spouse to MFJ brackets
   const status = filingStatus === "qss" ? "married" : filingStatus;
 
-  const fedDeduction = FEDERAL_DEDUCTION[filingStatus] ?? FEDERAL_DEDUCTION[status] ?? 0;
-  const caDeduction = CA_DEDUCTION[filingStatus] ?? CA_DEDUCTION[status] ?? 0;
+  const fedDeduction =
+    FEDERAL_DEDUCTION[filingStatus] ?? FEDERAL_DEDUCTION[status] ?? 0;
+  const caDeduction =
+    CA_DEDUCTION[filingStatus] ?? CA_DEDUCTION[status] ?? 0;
 
   const fedTaxable = Math.max(0, s - fedDeduction);
   const caTaxable = Math.max(0, s - caDeduction);
