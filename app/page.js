@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { calculateTexasTakeHome } from "../lib/texasTax";
+import { calculateTexasTakeHome } from "./lib/texasTax";
 
 const PAY_PERIODS = {
   annual: 1,
