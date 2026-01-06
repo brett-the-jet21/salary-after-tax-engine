@@ -121,7 +121,7 @@ function calculateProgressiveTax(income, brackets) {
 
 /**
  * Shared helper: calculate federal income tax + FICA only.
- * This lets other states (like Texas) reuse your exact federal/FICA logic.
+ * Other state calculators (like Texas) can reuse this to stay consistent.
  */
 export function calculateFederalAndFica({ annualGross, filingStatus }) {
   const s = Math.max(0, Number(annualGross || 0));
