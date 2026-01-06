@@ -112,4 +112,143 @@ export default function TexasPage() {
                   className={`w-full rounded-xl border px-3 py-2 text-sm font-semibold ${
                     payType === "hourly"
                       ? "border-slate-900"
-                      : "border-sla
+                      : "border-slate-200 text-slate-600"
+                  }`}
+                  onClick={() => setPayType("hourly")}
+                  type="button"
+                >
+                  Hourly
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-semibold">Filing status</label>
+              <select
+                className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                value={filingStatus}
+                onChange={(e) => setFilingStatus(e.target.value)}
+              >
+                {/* FIXED: These values match your tax engine keys */}
+                <option value="single">Single</option>
+                <option value="married">Married Filing Jointly</option>
+                <option value="mfs">Married Filing Separately</option>
+                <option value="hoh">Head of Household</option>
+                <option value="qss">Qualifying Surviving Spouse</option>
+              </select>
+            </div>
+
+            {payType === "salary" ? (
+              <div>
+                <label className="text-sm font-semibold">Annual salary</label>
+                <input
+                  className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                  inputMode="decimal"
+                  value={salaryInput}
+                  onChange={(e) => setSalaryInput(formatWithCommas(e.target.value))}
+                  placeholder="120,000"
+                />
+              </div>
+            ) : (
+              <>
+                <div>
+                  <label className="text-sm font-semibold">Hourly rate</label>
+                  <input
+                    className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                    inputMode="decimal"
+                    value={hourlyInput}
+                    onChange={(e) => setHourlyInput(formatWithCommas(e.target.value))}
+                    placeholder="65"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold">Hours per week</label>
+                  <input
+                    className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                    inputMode="decimal"
+                    value={hoursPerWeek}
+                    onChange={(e) => setHoursPerWeek(formatWithCommas(e.target.value))}
+                    placeholder="40"
+                  />
+                </div>
+              </>
+            )}
+
+            <div>
+              <label className="text-sm font-semibold">Pay period</label>
+              <select
+                className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                value={payPeriod}
+                onChange={(e) => setPayPeriod(e.target.value)}
+              >
+                <option value="annual">Annual</option>
+                <option value="monthly">Monthly</option>
+                <option value="biweekly">Bi-weekly</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        {/* Results */}
+        <section className="mt-6 grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="text-sm text-slate-600">Gross ({payPeriod})</div>
+            <div className="mt-1 text-2xl font-bold">${fmtMoney2(grossPerPeriod)}</div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="text-sm text-slate-600">Estimated take-home ({payPeriod})</div>
+            <div className="mt-1 text-2xl font-bold">${fmtMoney2(netPerPeriod)}</div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="text-sm text-slate-600">Effective tax rate</div>
+            <div className="mt-1 text-2xl font-bold">
+              {((result.effectiveTaxRate || 0) * 100).toFixed(1)}%
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="text-lg font-bold">Tax breakdown ({payPeriod})</h2>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            <div className="rounded-xl border border-slate-200 p-4">
+              <div className="text-sm text-slate-600">Federal income tax</div>
+              <div className="mt-1 text-xl font-bold">${fmtMoney2(fedPerPeriod)}</div>
+            </div>
+            <div className="rounded-xl border border-slate-200 p-4">
+              <div className="text-sm text-slate-600">FICA (SS + Medicare)</div>
+              <div className="mt-1 text-xl font-bold">${fmtMoney2(ficaPerPeriod)}</div>
+            </div>
+            <div className="rounded-xl border border-slate-200 p-4">
+              <div className="text-sm text-slate-600">Texas state income tax</div>
+              <div className="mt-1 text-xl font-bold">$0.00</div>
+            </div>
+          </div>
+
+          <p className="mt-4 text-sm text-slate-600">
+            <b>Footnote:</b> Estimates only. Results vary based on deductions, credits, pre-tax benefits,
+            and exact tax-year rules. Texas has no state income tax, but federal and payroll taxes still apply.
+          </p>
+        </section>
+
+        {/* SEO text */}
+        <section className="mt-8 space-y-3 text-sm text-slate-700">
+          <h2 className="text-lg font-bold">How Texas taxes work</h2>
+          <p>
+            Texas does not levy a state income tax on wages. Your take-home pay is mainly reduced by
+            federal income tax and payroll taxes (FICA).
+          </p>
+          <p>
+            Want to compare take-home pay? Jump back to the{" "}
+            <Link className="underline underline-offset-4" href="/">
+              California calculator
+            </Link>
+            .
+          </p>
+        </section>
+      </div>
+    </main>
+  );
+}
