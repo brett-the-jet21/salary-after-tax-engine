@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState } from "react";
@@ -356,26 +355,47 @@ export default function Home() {
             <li>CA SDI: ${fmtMoney2(result.sdi / divisor)}</li>
           </ul>
 
+          {/* -------------------- GOOGLE ADSENSE -------------------- */}
+          <div style={{ margin: "28px 0", textAlign: "center" }}>
+            <ins
+              className="adsbygoogle"
+              style={{ display: "block" }}
+              data-ad-client="ca-pub-8025748227928688"
+              data-ad-slot="5511951512"
+              data-ad-format="auto"
+              data-full-width-responsive="true"
+            />
+          </div>
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (adsbygoogle = window.adsbygoogle || []).push({});
+              `
+            }}
+          />
+          {/* ------------------ END GOOGLE ADSENSE ------------------ */}
+
           {/* -------------------- SEO CONTENT -------------------- */}
           <section
             style={seoWrapStyle}
             aria-label="California salary after tax calculator details"
           >
-            <h2 style={seoH2Style}>
-              California Salary After Tax Calculator
-            </h2>
+            <h2 style={seoH2Style}>California Salary After Tax Calculator</h2>
             <p style={seoPStyle}>
-              Use this calculator to estimate your <strong>California take-home pay</strong>{" "}
-              (net pay) after <strong>federal income tax</strong>,{" "}
-              <strong>FICA</strong> (Social Security + Medicare),{" "}
-              <strong>California state income tax</strong>, and <strong>CA SDI</strong>.
-              Your paycheck can vary based on filing status, pay frequency, and pre-tax deductions.
+              Use this calculator to estimate your{" "}
+              <strong>California take-home pay</strong> (net pay) after{" "}
+              <strong>federal income tax</strong>, <strong>FICA</strong> (Social
+              Security + Medicare), <strong>California state income tax</strong>, and{" "}
+              <strong>CA SDI</strong>. Your paycheck can vary based on filing status,
+              pay frequency, and pre-tax deductions.
             </p>
 
             <h2 style={seoH2Style}>How Take-Home Pay Is Calculated in California</h2>
             <p style={seoPStyle}>
-              Your net pay is estimated by starting with gross annual income (salary or hourly wages)
-              and subtracting taxes and required payroll deductions. This calculator estimates:
+              Your net pay is estimated by starting with gross annual income (salary or
+              hourly wages) and subtracting taxes and required payroll deductions. This
+              calculator estimates:
             </p>
             <ul style={seoUlStyle}>
               <li>Federal income tax (IRS brackets)</li>
@@ -386,25 +406,28 @@ export default function Home() {
               <li>Filing status (Single, Married Filing Jointly, etc.)</li>
             </ul>
 
-            <h2 style={seoH2Style}>Pay Frequency: Annual vs Monthly vs Biweekly vs Weekly</h2>
+            <h2 style={seoH2Style}>
+              Pay Frequency: Annual vs Monthly vs Biweekly vs Weekly
+            </h2>
             <p style={seoPStyle}>
               Pay frequency changes your paycheck size, but it generally does{" "}
-              <strong>not</strong> change your total taxes owed for the year. Use the dropdown above
-              to view take-home pay as {`"${label}"`} and see your tax breakdown per pay period.
+              <strong>not</strong> change your total taxes owed for the year. Use the
+              dropdown above to view take-home pay as {`"${label}"`} and see your tax
+              breakdown per pay period.
             </p>
 
             <h2 style={seoH2Style}>California Take-Home Pay Example</h2>
             <p style={seoPStyle}>
-              As a simple reference point, a <strong>$100,000</strong> annual salary in California
-              often results in roughly <strong>$68,000–$72,000</strong> in take-home pay, depending
-              on filing status, benefits, and deductions. Your results may vary based on your
-              specific situation.
+              As a simple reference point, a <strong>$100,000</strong> annual salary in
+              California often results in roughly <strong>$68,000–$72,000</strong> in
+              take-home pay, depending on filing status, benefits, and deductions. Your
+              results may vary based on your specific situation.
             </p>
 
             <h2 style={seoH2Style}>Salary vs Hourly Pay in California</h2>
             <p style={seoPStyle}>
-              Hourly and salaried employees can see different paycheck amounts even with similar
-              annual earnings:
+              Hourly and salaried employees can see different paycheck amounts even with
+              similar annual earnings:
             </p>
             <ul style={seoUlStyle}>
               <li>Hourly pay is commonly estimated using <strong>2,080 hours</strong> per year</li>
@@ -426,7 +449,8 @@ export default function Home() {
 
             <h2 style={seoH2Style}>Why California Paychecks Can Be Lower Than Expected</h2>
             <p style={seoPStyle}>
-              Many workers are surprised by the gap between gross pay and net pay. Common reasons include:
+              Many workers are surprised by the gap between gross pay and net pay. Common
+              reasons include:
             </p>
             <ul style={seoUlStyle}>
               <li>Progressive California income tax brackets</li>
@@ -441,30 +465,33 @@ export default function Home() {
             <div style={faqItemStyle}>
               <strong>Does this calculator include CA SDI?</strong>
               <div style={seoPStyle}>
-                Yes. California State Disability Insurance (CA SDI) is included as a payroll deduction estimate.
+                Yes. California State Disability Insurance (CA SDI) is included as a payroll
+                deduction estimate.
               </div>
             </div>
 
             <div style={faqItemStyle}>
               <strong>Is this California take-home pay estimate exact?</strong>
               <div style={seoPStyle}>
-                It’s an estimate based on standard assumptions. Your exact paycheck can vary based on benefits,
-                401(k) contributions, HSA, bonuses, and employer withholding settings.
+                It’s an estimate based on standard assumptions. Your exact paycheck can vary
+                based on benefits, 401(k) contributions, HSA, bonuses, and employer withholding
+                settings.
               </div>
             </div>
 
             <div style={faqItemStyle}>
               <strong>Why do my paychecks look different than this?</strong>
               <div style={seoPStyle}>
-                Your employer may withhold differently based on your W-4 and DE-4 settings, plus pre-tax deductions
-                and other payroll items that change taxable wages.
+                Your employer may withhold differently based on your W-4 and DE-4 settings,
+                plus pre-tax deductions and other payroll items that change taxable wages.
               </div>
             </div>
 
             <div style={faqItemStyle}>
               <strong>Can I use this for hourly wages?</strong>
               <div style={seoPStyle}>
-                Yes. Switch to Hourly Wage and enter your hours per week and weeks per year to estimate annual income and net pay.
+                Yes. Switch to Hourly Wage and enter your hours per week and weeks per year
+                to estimate annual income and net pay.
               </div>
             </div>
 
@@ -476,15 +503,13 @@ export default function Home() {
 
           {/* ✅ FOOTNOTE RESTORED */}
           <div style={footnoteStyle}>
-            Estimates are based on current federal and California tax brackets
-            and standard deductions. Results do not include itemized deductions,
-            tax credits, pre-tax benefits, retirement contributions, or employer-
-            sponsored deductions. This calculator is for informational purposes
-            only and should not be considered tax advice.
+            Estimates are based on current federal and California tax brackets and standard
+            deductions. Results do not include itemized deductions, tax credits, pre-tax
+            benefits, retirement contributions, or employer-sponsored deductions. This
+            calculator is for informational purposes only and should not be considered tax advice.
           </div>
         </div>
       </div>
     </div>
   );
 }
-
