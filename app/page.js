@@ -149,6 +149,12 @@ const seoH2Style = {
   fontSize: 18
 };
 
+const seoH3Style = {
+  marginTop: 12,
+  marginBottom: 6,
+  fontSize: 15
+};
+
 const seoPStyle = {
   marginTop: 0,
   marginBottom: 10,
@@ -165,6 +171,10 @@ const seoDisclaimerStyle = {
   marginTop: 10,
   fontSize: 12,
   color: "#666"
+};
+
+const faqItemStyle = {
+  marginBottom: 10
 };
 
 /* -------------------- COMPONENT -------------------- */
@@ -346,21 +356,41 @@ export default function Home() {
           </ul>
 
           {/* -------------------- SEO CONTENT -------------------- */}
-          <section style={seoWrapStyle} aria-label="California tax calculator details">
-            <h2 style={seoH2Style}>How California Salary After-Tax Pay Is Calculated</h2>
+          <section
+            style={seoWrapStyle}
+            aria-label="California salary after tax calculator details"
+          >
+            <h2 style={seoH2Style}>
+              California Salary After Tax Calculator
+            </h2>
             <p style={seoPStyle}>
-              Your take-home pay in California is estimated by applying both{" "}
-              <strong>federal</strong> and <strong>state</strong> taxes, along with
-              required payroll deductions. This calculator estimates net pay based on:
+              Use this calculator to estimate your <strong>California take-home pay</strong>{" "}
+              (net pay) after <strong>federal income tax</strong>,{" "}
+              <strong>FICA</strong> (Social Security + Medicare),{" "}
+              <strong>California state income tax</strong>, and <strong>CA SDI</strong>.
+              Your paycheck can vary based on filing status, pay frequency, and pre-tax deductions.
+            </p>
+
+            <h2 style={seoH2Style}>How Take-Home Pay Is Calculated in California</h2>
+            <p style={seoPStyle}>
+              Your net pay is estimated by starting with gross annual income (salary or hourly wages)
+              and subtracting taxes and required payroll deductions. This calculator estimates:
             </p>
             <ul style={seoUlStyle}>
-              <li>Federal income tax, based on IRS tax brackets</li>
-              <li>California state income tax, which is progressive</li>
-              <li>Social Security and Medicare (FICA taxes)</li>
+              <li>Federal income tax (IRS brackets)</li>
+              <li>California state income tax (progressive rates)</li>
+              <li>FICA payroll taxes (Social Security + Medicare)</li>
+              <li>California State Disability Insurance (CA SDI)</li>
               <li>Standard deduction assumptions</li>
               <li>Filing status (Single, Married Filing Jointly, etc.)</li>
-              <li>Pre-tax deductions such as 401(k) or health insurance (if applicable)</li>
             </ul>
+
+            <h2 style={seoH2Style}>Pay Frequency: Annual vs Monthly vs Biweekly vs Weekly</h2>
+            <p style={seoPStyle}>
+              Pay frequency changes your paycheck size, but it generally does{" "}
+              <strong>not</strong> change your total taxes owed for the year. Use the dropdown above
+              to view take-home pay as {`"${label}"`} and see your tax breakdown per pay period.
+            </p>
 
             <h2 style={seoH2Style}>California Take-Home Pay Example</h2>
             <p style={seoPStyle}>
@@ -383,26 +413,59 @@ export default function Home() {
 
             <h2 style={seoH2Style}>How Filing Status Affects California Taxes</h2>
             <p style={seoPStyle}>
-              Filing status affects your tax brackets and how much is withheld:
+              Filing status affects your tax brackets and withholding assumptions:
             </p>
             <ul style={seoUlStyle}>
               <li>Single filers generally reach higher marginal rates sooner</li>
               <li>Married filing jointly may benefit from wider tax brackets</li>
               <li>Head of household can reduce taxable income</li>
               <li>Married filing separately often results in higher total taxes</li>
+              <li>Qualifying surviving spouse uses married-joint brackets</li>
             </ul>
 
-            <h2 style={seoH2Style}>Why California Paychecks Are Lower Than Expected</h2>
+            <h2 style={seoH2Style}>Why California Paychecks Can Be Lower Than Expected</h2>
             <p style={seoPStyle}>
-              Many workers are surprised by the gap between gross pay and take-home pay. Common
-              reasons include:
+              Many workers are surprised by the gap between gross pay and net pay. Common reasons include:
             </p>
             <ul style={seoUlStyle}>
               <li>Progressive California income tax brackets</li>
               <li>Mandatory FICA payroll deductions</li>
-              <li>Employer withholding assumptions</li>
+              <li>CA SDI payroll deductions</li>
+              <li>Withholding assumptions vs your actual tax situation</li>
               <li>Benefits and retirement contributions</li>
             </ul>
+
+            <h2 style={seoH2Style}>Frequently Asked Questions</h2>
+
+            <div style={faqItemStyle}>
+              <strong>Does this calculator include CA SDI?</strong>
+              <div style={seoPStyle}>
+                Yes. California State Disability Insurance (CA SDI) is included as a payroll deduction estimate.
+              </div>
+            </div>
+
+            <div style={faqItemStyle}>
+              <strong>Is this California take-home pay estimate exact?</strong>
+              <div style={seoPStyle}>
+                It’s an estimate based on standard assumptions. Your exact paycheck can vary based on benefits,
+                401(k) contributions, HSA, bonuses, and employer withholding settings.
+              </div>
+            </div>
+
+            <div style={faqItemStyle}>
+              <strong>Why do my paychecks look different than this?</strong>
+              <div style={seoPStyle}>
+                Your employer may withhold differently based on your W-4 and DE-4 settings, plus pre-tax deductions
+                and other payroll items that change taxable wages.
+              </div>
+            </div>
+
+            <div style={faqItemStyle}>
+              <strong>Can I use this for hourly wages?</strong>
+              <div style={seoPStyle}>
+                Yes. Switch to Hourly Wage and enter your hours per week and weeks per year to estimate annual income and net pay.
+              </div>
+            </div>
 
             <p style={seoDisclaimerStyle}>
               Updated for the 2026 tax year. Estimates are for informational purposes only.
