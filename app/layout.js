@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "California Salary After Tax Calculator",
+  title: "California Salary After Tax Calculator (2026) – Take-Home Pay",
   description:
-    "Estimate your California take-home pay after federal tax, FICA, California state income tax, and CA SDI."
+    "Calculate your California take-home pay after federal tax, FICA, California state income tax, and CA SDI. Fast, accurate, and free."
 };
 
 export default function RootLayout({ children }) {
