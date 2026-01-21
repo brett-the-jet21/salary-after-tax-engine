@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export const metadata = {
   title: "California Salary After Tax Calculator (2026) – Take-Home Pay",
   description:
@@ -8,9 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense */}
-        <script
+        <Script
           async
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8025748227928688"
           crossOrigin="anonymous"
         />
