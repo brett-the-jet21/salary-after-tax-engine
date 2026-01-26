@@ -3,7 +3,7 @@ import Calculator from "@/components/Calculator";
 export const metadata = {
   title: "$60000 Salary After Tax in California (2026 Take-Home Pay)",
   description:
-    "See your take-home pay after federal tax, California state tax, SDI, and FICA on a $60000 salary. Updated for 2026."
+    "Calculate your take-home pay in California if you earn $60000 per year. Includes federal tax, CA state tax, FICA, and SDI. Updated for 2026."
 };
 
 export default function Page() {
@@ -12,23 +12,27 @@ export default function Page() {
       <h1>$60000 Salary After Tax in California</h1>
 
       <p>
-        If you earn <strong>$60000 per year in California</strong>, your
-        take-home pay depends on federal taxes, California state income tax,
-        Social Security, and Medicare.
+        If your annual salary is <strong>$60000</strong> in California, your
+        actual take-home pay depends on federal income tax, California state tax,
+        Social Security, Medicare, and SDI.
       </p>
 
       <Calculator presetSalary="60000" />
 
-      <h2>How taxes affect a $60000 salary in CA</h2>
+      <h2>California tax breakdown</h2>
       <p>
-        California has progressive state income tax rates. Your employer also
-        withholds federal income tax and payroll taxes automatically.
+        California uses progressive income tax brackets. Higher portions of your
+        income are taxed at higher rates, while payroll taxes are withheld
+        automatically.
       </p>
 
-      <h2>Is this calculator accurate?</h2>
+      <h2>Frequently asked questions</h2>
       <p>
-        Yes. This calculator uses current IRS and California tax brackets and
-        includes CA SDI.
+        <strong>Does this include CA SDI?</strong> Yes.
+      </p>
+      <p>
+        <strong>Is this calculator accurate?</strong> This calculator uses
+        current tax rates and is updated for 2026.
       </p>
 
       <p style={{ marginTop: 24, fontSize: 13, color: "#666" }}>

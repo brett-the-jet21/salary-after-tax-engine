@@ -1,23 +1,23 @@
 import Calculator from "@/components/Calculator";
 
 export const metadata = {
-  title: "$40000 Salary After Tax in California (2026 Take-Home Pay)",
+  title: "$80000 Salary After Tax in California (2026 Take-Home Pay)",
   description:
-    "Calculate your take-home pay in California if you earn $40000 per year. Includes federal tax, CA state tax, FICA, and SDI. Updated for 2026."
+    "Calculate your take-home pay in California if you earn $80000 per year. Includes federal tax, CA state tax, FICA, and SDI. Updated for 2026."
 };
 
 export default function Page() {
   return (
     <main style={{ maxWidth: 820, margin: "0 auto", padding: 24 }}>
-      <h1>$40000 Salary After Tax in California</h1>
+      <h1>$80000 Salary After Tax in California</h1>
 
       <p>
-        If your annual salary is <strong>$40000</strong> in California, your
+        If your annual salary is <strong>$80000</strong> in California, your
         actual take-home pay depends on federal income tax, California state tax,
         Social Security, Medicare, and SDI.
       </p>
 
-      <Calculator presetSalary="40000" />
+      <Calculator presetSalary="80000" />
 
       <h2>California tax breakdown</h2>
       <p>
