@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { calculateCaliforniaTakeHome } from "@/app/lib/californiaTax";
+import { calculateCaliforniaTakeHome } from "../app/lib/californiaTax.js";
 
 const PAY_PERIODS: Record<string, number> = {
   annual: 1,
@@ -54,10 +54,7 @@ export default function Calculator({
 
   const results = useMemo(() => {
     const filingStatus = "single"; // keep simple for SEO pages; your main page can have full selector
-    const r = calculateCaliforniaTakeHome({
-      annualIncome,
-      filingStatus
-    });
+    const r = calculateCaliforniaTakeHome({ salary: annualIncome, filingStatus });
     return r;
   }, [annualIncome]);
 
