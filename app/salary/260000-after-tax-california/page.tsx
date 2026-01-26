@@ -1,4 +1,5 @@
 import Calculator from "@/components/Calculator";
+import RelatedSalaries from "@/components/RelatedSalaries";
 
 export const metadata = {
   title: "$260000 Salary After Tax in California (2026 Take-Home Pay)",
@@ -19,7 +20,10 @@ export default function Page() {
 
       <Calculator presetSalary="260000" />
 
-      <h2>California tax breakdown</h2>
+      
+
+      <RelatedSalaries salary={260000} />
+<h2>California tax breakdown</h2>
       <p>
         California uses progressive income tax brackets. Higher portions of your
         income are taxed at higher rates, while payroll taxes are withheld
