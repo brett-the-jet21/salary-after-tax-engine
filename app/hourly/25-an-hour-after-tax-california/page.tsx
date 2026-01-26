@@ -1,4 +1,5 @@
-import Calculator from "@/components/Calculator";
+import Calculator from "../../../components/Calculator";
+import RelatedHourly from "../../../components/RelatedHourly";
 
 export const metadata = {
   title: "$25/Hour After Tax in California (2026 Paycheck Calculator)",
@@ -18,7 +19,38 @@ export default function Page() {
 
       <Calculator presetHourly="25" />
 
-      <h2>Annual salary equivalent</h2>
+      
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "": "https://schema.org",
+            "": "FAQPage",
+            "mainEntity": [
+              {
+                "": "Question",
+                "name": "How much is \ž39{RATE}/hour after tax in California?",
+                "acceptedAnswer": {
+                  "": "Answer",
+                  "text": "Your take-home pay depends on hours worked and withholdings (federal tax, California state tax, FICA, and CA SDI). Use the calculator above for an estimate."
+                }
+              },
+              {
+                "": "Question",
+                "name": "Does this include California SDI?",
+                "acceptedAnswer": {
+                  "": "Answer",
+                  "text": "Yes, the estimate includes CA SDI where applicable."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
+      <RelatedHourly rate={25} />
+<h2>Annual salary equivalent</h2>
       <p>
         At 40 hours per week, $25/hour equals approximately{" "}
         <strong>$52000</strong> per year before taxes.

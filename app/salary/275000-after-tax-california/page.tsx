@@ -1,5 +1,5 @@
-import Calculator from "@/components/Calculator";
-import RelatedSalaries from "@/components/RelatedSalaries";
+import Calculator from "../../../components/Calculator";
+import RelatedSalaries from "../../../components/RelatedSalaries";
 
 export const metadata = {
   title: "$275000 Salary After Tax in California (2026 Take-Home Pay)",
