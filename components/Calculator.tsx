@@ -124,11 +124,11 @@ export default function Calculator({
 
   // These fields depend on your calculateCaliforniaTakeHome return shape.
   // We safely read common keys; if any are missing, they show as 0.00.
-  const netAnnual = Number((results as any)?.netAnnual ?? (results as any)?.net ?? 0) || 0;
-  const fedAnnual = Number((results as any)?.federalTax ?? 0) || 0;
-  const stateAnnual = Number((results as any)?.stateTax ?? (results as any)?.californiaTax ?? 0) || 0;
-  const ficaAnnual = Number((results as any)?.fica ?? (results as any)?.payrollTax ?? 0) || 0;
-  const sdiAnnual = Number((results as any)?.sdi ?? (results as any)?.caSdi ?? 0) || 0;
+  const netAnnual = Number((results as any)?.takeHomePay ?? (results as any)?.netAnnual ?? (results as any)?.netPay ?? (results as any)?.net ?? 0) || 0;
+  const fedAnnual = Number((results as any)?.federalTax ?? (results as any)?.federalIncomeTax ?? 0) || 0;
+  const stateAnnual = Number((results as any)?.caStateTax ?? (results as any)?.stateTax ?? (results as any)?.stateIncomeTax ?? (results as any)?.californiaTax ?? 0) || 0;
+  const ficaAnnual = Number((results as any)?.fica ?? (results as any)?.ficaTax ?? (results as any)?.payrollTax ?? 0) || 0;
+  const sdiAnnual = Number((results as any)?.caSDI ?? (results as any)?.sdi ?? (results as any)?.sdiTax ?? (results as any)?.caSdi ?? 0) || 0;
 
   return (
     <section style={{ marginTop: 18 }}>
