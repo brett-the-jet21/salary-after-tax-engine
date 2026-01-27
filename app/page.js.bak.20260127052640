@@ -1,5 +1,4 @@
 "use client";
-import FAQSchema from "./components/FAQSchema";
 import InternalLinks from "./components/InternalLinks";
 
 import { useMemo, useState } from "react";
@@ -218,7 +217,6 @@ export default function Home() {
 
   return (
     <div style={pageWrapStyle}>
-      <FAQSchema />
       <div style={containerStyle}>
         <div style={cardStyle}>
           <h1>California Salary After Tax Calculator</h1>
