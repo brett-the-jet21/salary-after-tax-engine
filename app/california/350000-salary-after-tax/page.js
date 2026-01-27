@@ -105,7 +105,7 @@ const faqItemStyle = { marginBottom: 10 };
 
 export default function Page() {
   const [incomeType, setIncomeType] = useState("annual");
-  const [annualSalary, setAnnualSalary] = useState("250000");
+  const [annualSalary, setAnnualSalary] = useState("350000");
   const [hourlyWage, setHourlyWage] = useState("30");
   const [hoursPerWeek, setHoursPerWeek] = useState("40");
   const [weeksPerYear, setWeeksPerYear] = useState("52");
@@ -144,7 +144,7 @@ export default function Page() {
     } catch (e) {}
   }, [incomeType, annualSalary, hourlyWage, hoursPerWeek, weeksPerYear, filingStatus, payPeriod]);
 
-  const salaryText = Number("250000").toLocaleString();
+  const salaryText = Number("350000").toLocaleString();
 
   return (
     <div style={pageWrapStyle}>
