@@ -4,12 +4,13 @@ import { NextResponse } from "next/server";
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // /salary/305000-after-tax-california -> /california/305000-salary-after-tax
+  // Old SEO route:
+  // /salary/305000-after-tax-california -> /california/salary/305000-after-tax
   const m = pathname.match(/^\/salary\/(\d+)-after-tax-california\/?$/);
   if (m) {
     const amount = m[1];
     const url = req.nextUrl.clone();
-    url.pathname = `/california/${amount}-salary-after-tax`;
+    url.pathname = `/california/salary/${amount}-after-tax`;
     return NextResponse.redirect(url, 301);
   }
 
