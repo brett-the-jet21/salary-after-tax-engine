@@ -55,15 +55,68 @@ export default function Calculator({
   const results = useMemo(() => {
     const filingStatus = "single"; // keep simple for SEO pages; your main page can have full selector
     const r = calculateCaliforniaTakeHome({ salary: annualIncome, filingStatus });
+  
+  // --- Normalize tax output across main + SEO pages ---
+  const gross = Number(r?.gross ?? annualIncome ?? 0);
 
-  const fed = Number(r?.federalTax ?? r?.federalIncomeTax ?? r?.federal ?? 0);
-  const ca  = Number(r?.caStateTax ?? r?.stateTax ?? r?.stateIncomeTax ?? r?.caTax ?? 0);
-  const net = Number(r?.takeHomePay ?? r?.netAnnual ?? r?.netPay ?? r?.net ?? 0);
+  const fica = Number(
+    r?.fica ??
+      r?.ficaTax ??
+      r?.payrollTax ??
+      0
+  );
 
+  const sdi = Number(
+    r?.caSDI ??
+      r?.sdi ??
+      r?.sdiTax ??
+      0
+  );
+
+  const fed = Number(
+    r?.federalTax ??
+      r?.federalIncomeTax ??
+      r?.federal ??
+      r?.federal_income_tax ??
+      0
+  );
+
+  const ca = Number(
+    r?.caStateTax ??
+      r?.stateTax ??
+      r?.stateIncomeTax ??
+      r?.californiaTax ??
+      r?.californiaStateTax ??
+      r?.caIncomeTax ??
+      r?.ca_income_tax ??
+      r?.state ??
+      0
+  );
+
+  let net = Number(
+    r?.takeHomePay ??
+      r?.netAnnual ??
+      r?.netPay ??
+      r?.net ??
+      r?.takeHome ??
+      0
+  );
+
+  // If engine doesn’t return net, compute it from the components
+  if (!Number.isFinite(net) || net <= 0) {
+    net = gross - fed - ca - fica - sdi;
+  }
+
+  // Write back canonical keys used by the UI
+  r.gross = gross;
+  r.fica = fica;
+  r.caSDI = sdi;
   r.federalTax = fed;
   r.caStateTax = ca;
   r.takeHomePay = net;
 
+
+  
     return r;
   }, [annualIncome]);
 
