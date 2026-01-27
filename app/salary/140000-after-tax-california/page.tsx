@@ -14,7 +14,7 @@ export default function Page() {
   const payPeriod: keyof typeof periods = "annual";
   const div = periods[payPeriod] || 1;
   const annualIncome = 140000;
-  const out = calculateCaliforniaTakeHome({ annualIncome, filingStatus: "single" });
+  const out = calculateCaliforniaTakeHome({ salary: annualIncome / div, filingStatus: "single" });
 
   return (
     <main style={{ maxWidth: 820, margin: "0 auto", padding: 24 }}>
