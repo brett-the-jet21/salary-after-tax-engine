@@ -1,5 +1,4 @@
 "use client";
-import InternalLinks from "./components/InternalLinks";
 
 import { useMemo, useState } from "react";
 import { calculateCaliforniaTakeHome } from "./lib/californiaTax";
@@ -503,7 +502,6 @@ export default function Home() {
           {/* ------------------ END SEO CONTENT ------------------ */}
 
           {/* ✅ FOOTNOTE RESTORED */}
-            <InternalLinks />
           <div style={footnoteStyle}>
             Estimates are based on current federal and California tax brackets and standard
             deductions. Results do not include itemized deductions, tax credits, pre-tax
