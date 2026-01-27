@@ -166,5 +166,16 @@ export function calculateCaliforniaTakeHome({ salary, filingStatus }) {
     );
   }
 
-  return out;
+  
+  // --- Canonical alias keys (used by UI/SEO pages) ---
+  // Keep these aligned with the real computed fields returned by this engine.
+  try {
+    if (typeof out === "object" && out) {
+      out.federalTax = out.federal ?? out.federalTax ?? 0;
+      out.caStateTax = out.state ?? out.caStateTax ?? 0;
+      out.takeHomePay = out.takeHome ?? out.takeHomePay ?? 0;
+    }
+  } catch (e) {}
+
+return out;
 }
