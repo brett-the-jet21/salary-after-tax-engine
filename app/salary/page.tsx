@@ -25,6 +25,12 @@ export default function SalaryIndexPage() {
       <h1 style={{ fontSize: 28, marginBottom: 8 }}>
         California Salary After Tax – Examples by Income
       </h1>
+
+      <p style={{ marginTop: 8, marginBottom: 0 }}>
+        <a href="/california/salary-comparison" style={{ fontWeight: 700 }}>
+          Compare California salaries (every k) →
+        </a>
+      </p>
       <p style={{ marginTop: 0, color: "#444", lineHeight: 1.6 }}>
         Pick a salary below to view an estimated California take-home pay breakdown
         (federal + FICA + California).
