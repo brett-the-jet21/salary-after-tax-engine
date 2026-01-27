@@ -144,11 +144,27 @@ export function calculateCaliforniaTakeHome({ salary, filingStatus }) {
 
   const totalTax = federal + state + fica + sdi;
 
-  return {
+  const out = {
     federal,
     state,
     fica,
     sdi,
     takeHome: s - totalTax
   };
+
+  // --- Canonical keys for ALL pages (main + SEO microsites) ---
+  // Federal
+  if (out.federalTax == null) out.federalTax = out.federalIncomeTax ?? out.federal ?? 0;
+
+  // California
+  if (out.caStateTax == null) out.caStateTax = out.stateTax ?? out.stateIncomeTax ?? out.caTax ?? 0;
+
+  // Take-home
+  if (out.takeHomePay == null) {
+    out.takeHomePay = out.netAnnual ?? out.netPay ?? out.net ?? (
+      (out.gross ?? 0) - (out.federalTax ?? 0) - (out.caStateTax ?? 0) - (out.fica ?? 0) - (out.caSDI ?? 0)
+    );
+  }
+
+  return out;
 }
