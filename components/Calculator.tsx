@@ -55,6 +55,15 @@ export default function Calculator({
   const results = useMemo(() => {
     const filingStatus = "single"; // keep simple for SEO pages; your main page can have full selector
     const r = calculateCaliforniaTakeHome({ salary: annualIncome, filingStatus });
+
+  const fed = Number(r?.federalTax ?? r?.federalIncomeTax ?? r?.federal ?? 0);
+  const ca  = Number(r?.caStateTax ?? r?.stateTax ?? r?.stateIncomeTax ?? r?.caTax ?? 0);
+  const net = Number(r?.takeHomePay ?? r?.netAnnual ?? r?.netPay ?? r?.net ?? 0);
+
+  r.federalTax = fed;
+  r.caStateTax = ca;
+  r.takeHomePay = net;
+
     return r;
   }, [annualIncome]);
 
