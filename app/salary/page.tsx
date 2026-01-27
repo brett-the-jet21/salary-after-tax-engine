@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { calculateCaliforniaTakeHome } from "../../lib/californiaTax";
 
 export const metadata = {
   title: "California Salary After Tax by Salary (2026 Take-Home Pay)",
@@ -11,6 +12,12 @@ const POPULAR = [
 ];
 
 export default function SalaryHub() {
+  // TAX_ENGINE_FIX_ZERO_FIELDS
+  const periods = { annual: 1, monthly: 12, biweekly: 26, weekly: 52 };
+  const div = periods[payPeriod] || 1;
+  const annualIncome = Number(String(salary || annualSalary || "").replace(/[^0-9.]/g, "")) || 0;
+  const out = calculateCaliforniaTakeHome({ annualIncome, filingStatus: "single" });
+
   return (
     <main style={{ maxWidth: 920, margin: "0 auto", padding: 24 }}>
       <h1>California Salary After Tax (Browse by Salary)</h1>

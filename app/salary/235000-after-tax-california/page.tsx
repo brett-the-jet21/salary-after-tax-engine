@@ -1,4 +1,5 @@
 import Calculator from "../../../components/Calculator";
+import { calculateCaliforniaTakeHome } from "../../lib/californiaTax";
 import RelatedSalaries from "../../../components/RelatedSalaries";
 
 export const metadata = {
@@ -8,6 +9,12 @@ export const metadata = {
 };
 
 export default function Page() {
+  // TAX_ENGINE_FIX_ZERO_FIELDS
+  const periods = { annual: 1, monthly: 12, biweekly: 26, weekly: 52 };
+  const div = periods[payPeriod] || 1;
+  const annualIncome = Number(String(salary || annualSalary || "").replace(/[^0-9.]/g, "")) || 0;
+  const out = calculateCaliforniaTakeHome({ annualIncome, filingStatus: "single" });
+
   return (
     <main style={{ maxWidth: 820, margin: "0 auto", padding: 24 }}>
       <h1>$235000 Salary After Tax in California</h1>
