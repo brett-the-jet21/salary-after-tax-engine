@@ -15,7 +15,7 @@ export default function CaliforniaHub() {
       
 
       <div style={{ marginTop: 12, padding: 12, border: "1px solid #e5e5e5", borderRadius: 12, background: "#fff" }}>
-        <a href="/california/salary-comparison" style={{ fontWeight: 800 }}>Compare CA salaries (every k) →</a>
+        <a href="/california/salary-comparison" style={{ fontWeight: 800 }}>Compare CA salaries (every $5k) →</a>
       </div>
       <p style={{ marginTop: 10, opacity: 0.9, lineHeight: 1.7 }}>
         Browse salary pages or jump into the full calculator. These pages are designed for fast lookup and SEO.
