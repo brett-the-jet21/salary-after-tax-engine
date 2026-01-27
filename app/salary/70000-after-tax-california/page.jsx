@@ -34,7 +34,7 @@ export default function Page() {
           <li>Select filing status and pay frequency to see your breakdown.</li>
         </ol>
 
-        <a href="/" style={{
+        <a href="/?salary=&pay=annual&status=single" style={{
           display: "inline-block",
           marginTop: 10,
           textDecoration: "none",
