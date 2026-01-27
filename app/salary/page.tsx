@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { calculateCaliforniaTakeHome } from "../../lib/californiaTax";
+import { calculateCaliforniaTakeHome } from "../lib/californiaTax";
 
 export const metadata = {
   title: "California Salary After Tax by Salary (2026 Take-Home Pay)",
