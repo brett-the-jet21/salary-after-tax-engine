@@ -13,7 +13,7 @@ export default function Page() {
   const periods = { annual: 1, monthly: 12, biweekly: 26, weekly: 52 };
   const payPeriod: keyof typeof periods = "annual";
   const div = periods[payPeriod] || 1;
-  const annualIncome = Number(String(salary || annualSalary || "").replace(/[^0-9.]/g, "")) || 0;
+  const annualIncome = 125000;
   const out = calculateCaliforniaTakeHome({ annualIncome, filingStatus: "single" });
 
   return (
