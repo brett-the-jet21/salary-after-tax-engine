@@ -130,7 +130,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             ].map(([citySlug, cityName]) => (
               <Link
                 key={String(citySlug)}
-                href={`/california/${citySlug}/${salary}-salary-after-tax`}
+                href={`/california/in/${citySlug}/${salary}-salary-after-tax`}
                 style={{
                   padding: "8px 10px",
                   borderRadius: 999,
