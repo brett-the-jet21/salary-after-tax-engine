@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const title = `$${salary.toLocaleString()} Salary After Tax in California (2026)`;
   const description =
-    `See estimated take-home pay for $${salary.toLocaleString()} in California after federal tax, FICA, CA state income tax, and CA SDI.`;
+    `See estimated take-home pay for $${salary.toLocaleString()} in California after federal tax, FICA, CA state tax, and CA SDI.`;
 
   return { title, description };
 }
@@ -37,11 +37,47 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const r = calculateCaliforniaTakeHome({ salary, filingStatus: "single" });
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `How much tax do you pay on a $${salary.toLocaleString()} salary in California?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Estimated total taxes are $${money(salary - r.takeHome)} on a $${salary.toLocaleString()} salary in California, leaving an annual take-home pay of $${money(r.takeHome)}.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `What is the monthly take-home pay for a $${salary.toLocaleString()} salary in California?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `The estimated monthly take-home pay is $${money(r.takeHome / 12)}.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `Is $${salary.toLocaleString()} a good salary in California?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `A $${salary.toLocaleString()} salary is considered a high income in many parts of California, though cost of living varies by city.`
+        }
+      }
+    ]
+  };
+
   const effectiveRate = salary > 0 ? ((salary - r.takeHome) / salary) * 100 : 0;
 
   return (
     <main style={{ minHeight: "100vh", background: "#fafafa" }}>
-      <div style={{ maxWidth: 980, margin: "0 auto", padding: "28px 16px 56px" }}>
+      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+<div style={{ maxWidth: 980, margin: "0 auto", padding: "28px 16px 56px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
           <div>
             <div style={{ fontSize: 13, opacity: 0.75, marginBottom: 6 }}>
