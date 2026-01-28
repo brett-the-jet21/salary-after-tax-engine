@@ -1,4 +1,4 @@
-import SalaryPage from "../../[slug]/page";
+import SalaryPage from "../../../[slug]/page";
 
 function titleCaseCity(city: string) {
   return city
