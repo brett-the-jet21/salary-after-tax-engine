@@ -116,6 +116,37 @@ export default function Page({ params }: { params: { slug: string } }) {
           <SalaryJump initialSalary={salary} />
         </div>
 
+        <section style={{ marginTop: 14 }}>
+          <div style={{ fontSize: 14, opacity: 0.7, fontWeight: 800, marginBottom: 8 }}>
+            Popular cities for this salary
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+            {[
+              ["san-francisco", "San Francisco"],
+              ["los-angeles", "Los Angeles"],
+              ["san-diego", "San Diego"],
+              ["san-jose", "San Jose"],
+              ["orange-county", "Orange County"]
+            ].map(([citySlug, cityName]) => (
+              <Link
+                key={String(citySlug)}
+                href={`/california/${citySlug}/${salary}-salary-after-tax`}
+                style={{
+                  padding: "8px 10px",
+                  borderRadius: 999,
+                  border: "1px solid #e6e6e6",
+                  background: "#fff",
+                  textDecoration: "none",
+                  color: "#111",
+                  fontWeight: 800
+                }}
+              >
+                {cityName} →
+              </Link>
+            ))}
+          </div>
+        </section>
+
         <section
           style={{
             marginTop: 18,
