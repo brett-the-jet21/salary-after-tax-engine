@@ -5,7 +5,7 @@ type Props = { params: { slug: string } };
 export default function LegacyCaliforniaSalaryRedirect({ params }: Props) {
   const slug = String(params?.slug || "").trim();
 
-  // Grab first number chunk, allowing commas: "50,000"
+  // Find the first number chunk, allowing commas: "$50,000-after-tax" -> "50,000"
   const m = slug.match(/(\d[\d,]*)/);
   if (!m) return notFound();
 
