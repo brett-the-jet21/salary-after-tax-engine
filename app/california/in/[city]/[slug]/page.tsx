@@ -1,11 +1,15 @@
-import SalaryPage from "../../../[slug]/page";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { calculateCaliforniaTakeHome } from "../../../../lib/californiaTax";
+import SalaryJump from "../../../[slug]/SalaryJump.client";
 
-function titleCaseCity(city: string) {
-  return city
-    .split("-")
-    .filter(Boolean)
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+export const revalidate = 86400;
+
+function money(n: number) {
+  return (Number(n) || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
 
 function parseSalaryFromSlug(slug: string): number | null {
@@ -16,6 +20,14 @@ function parseSalaryFromSlug(slug: string): number | null {
   return salary;
 }
 
+function titleCaseCity(city: string) {
+  return city
+    .split("-")
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 export async function generateMetadata({
   params
 }: {
@@ -24,9 +36,7 @@ export async function generateMetadata({
   const salary = parseSalaryFromSlug(params.slug);
   const cityName = titleCaseCity(params.city);
 
-  if (!salary) {
-    return { title: `California Salary After Tax in ${cityName}` };
-  }
+  if (!salary) return { title: `Salary After Tax in ${cityName}, CA` };
 
   return {
     title: `$${salary.toLocaleString()} Salary After Tax in ${cityName}, CA (2026)`,
@@ -39,6 +49,178 @@ export default function CitySalaryPage({
 }: {
   params: { city: string; slug: string };
 }) {
-  // Reuse the canonical salary page UI + math
-  return <SalaryPage params={{ slug: params.slug }} />;
+  const salary = parseSalaryFromSlug(params.slug);
+  if (!salary) return notFound();
+
+  const citySlug = params.city;
+  const cityName = titleCaseCity(citySlug);
+
+  const r = calculateCaliforniaTakeHome({ salary, filingStatus: "single" });
+  const effectiveRate = salary > 0 ? ((salary - r.takeHome) / salary) * 100 : 0;
+
+  const canonical = `/california/${salary}-salary-after-tax`;
+
+  return (
+    <main style={{ minHeight: "100vh", background: "#fafafa" }}>
+      <div style={{ maxWidth: 980, margin: "0 auto", padding: "28px 16px 56px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontSize: 13, opacity: 0.75, marginBottom: 6 }}>
+              California Salary After Tax
+            </div>
+
+            <h1 style={{ fontSize: 42, lineHeight: 1.1, margin: 0 }}>
+              ${salary.toLocaleString()} Salary After Tax in {cityName}, CA{" "}
+              <span style={{ opacity: 0.65 }}>(2026)</span>
+            </h1>
+
+            <p style={{ marginTop: 10, marginBottom: 0, fontSize: 16, opacity: 0.85 }}>
+              Estimated take-home pay after <b>federal tax</b>, <b>FICA</b>, <b>California state tax</b>, and <b>CA SDI</b>.
+            </p>
+
+            <p style={{ marginTop: 10, marginBottom: 0, fontSize: 13, opacity: 0.75 }}>
+              Canonical:{" "}
+              <Link href={canonical} style={{ fontWeight: 800 }}>
+                {canonical}
+              </Link>
+            </p>
+          </div>
+
+          <div style={{ alignSelf: "center", display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <Link
+              href="/"
+              style={{
+                display: "inline-block",
+                padding: "10px 14px",
+                borderRadius: 10,
+                border: "1px solid #d7d7d7",
+                background: "#fff",
+                fontWeight: 800,
+                textDecoration: "none",
+                color: "#111"
+              }}
+            >
+              Open full calculator →
+            </Link>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 18 }}>
+          <SalaryJump initialSalary={salary} />
+        </div>
+
+        <section style={{ marginTop: 14 }}>
+          <div style={{ fontSize: 14, opacity: 0.7, fontWeight: 800, marginBottom: 8 }}>
+            Popular cities for this salary
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, position: "relative", zIndex: 10 }}>
+            {[
+              ["san-francisco", "San Francisco"],
+              ["los-angeles", "Los Angeles"],
+              ["san-diego", "San Diego"],
+              ["san-jose", "San Jose"],
+              ["orange-county", "Orange County"]
+            ].map(([slug, name]) => {
+              const active = slug === citySlug;
+              return (
+                <Link
+                  key={String(slug)}
+                  href={`/california/in/${slug}/${salary}-salary-after-tax`}
+                  style={{
+                    padding: "8px 10px",
+                    borderRadius: 999,
+                    border: "1px solid #e6e6e6",
+                    background: active ? "#111" : "#fff",
+                    color: active ? "#fff" : "#111",
+                    textDecoration: "none",
+                    fontWeight: 800
+                  }}
+                >
+                  {name} →
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        <section
+          style={{
+            marginTop: 18,
+            background: "#fff",
+            border: "1px solid #e6e6e6",
+            borderRadius: 16,
+            boxShadow: "0 1px 0 rgba(0,0,0,0.03)",
+            padding: 18
+          }}
+        >
+          <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 16 }}>
+            <div>
+              <div style={{ fontSize: 14, opacity: 0.7, fontWeight: 700 }}>Take-home pay (annual)</div>
+              <div style={{ fontSize: 52, fontWeight: 900, letterSpacing: -0.5, marginTop: 6 }}>
+                ${money(r.takeHome)}
+              </div>
+
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 10 }}>
+                <div style={{ padding: "8px 10px", borderRadius: 999, background: "#f3f3f3", fontWeight: 800 }}>
+                  Effective tax rate: {effectiveRate.toFixed(1)}%
+                </div>
+                <div style={{ padding: "8px 10px", borderRadius: 999, background: "#f3f3f3", fontWeight: 800 }}>
+                  Monthly take-home: ${money(r.takeHome / 12)}
+                </div>
+                <div style={{ padding: "8px 10px", borderRadius: 999, background: "#f3f3f3", fontWeight: 800 }}>
+                  Biweekly take-home: ${money(r.takeHome / 26)}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ borderLeft: "1px solid #eee", paddingLeft: 16 }}>
+              <div style={{ fontSize: 14, opacity: 0.7, fontWeight: 700 }}>Tax breakdown (annual)</div>
+
+              <div style={{ marginTop: 10, display: "grid", gap: 10 }}>
+                {[
+                  ["Federal tax", r.federalTax],
+                  ["California tax", r.stateTax],
+                  ["FICA", r.fica],
+                  ["CA SDI", r.caSDI ?? r.sdi],
+                ].map(([label, value]) => (
+                  <div
+                    key={String(label)}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 12,
+                      padding: "10px 12px",
+                      border: "1px solid #eee",
+                      borderRadius: 12,
+                      background: "#fff"
+                    }}
+                  >
+                    <div style={{ fontWeight: 800 }}>{label}</div>
+                    <div style={{ fontWeight: 900 }}>${money(Number(value))}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ marginTop: 12, fontSize: 13, opacity: 0.7 }}>
+                Assumes filing status: <b>Single</b>. For other filing statuses, use the full calculator.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={{ marginTop: 18, display: "grid", gap: 10 }}>
+          <div style={{ fontSize: 22, fontWeight: 900 }}>Compare salaries</div>
+
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <Link href="/california/salary-comparison" style={{ fontWeight: 800 }}>
+              Compare (every $5k) →
+            </Link>
+            <Link href={canonical} style={{ fontWeight: 800 }}>
+              View statewide page →
+            </Link>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
 }
