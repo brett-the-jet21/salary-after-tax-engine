@@ -1,20 +1,32 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest) {
+export const config = {
+  matcher: [
+    "/salary/:path*",
+    "/california/salary/:path*",
+  ],
+};
+
+export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Old SEO route:
-  // /salary/305000-after-tax-california -> /california/salary/305000-after-tax
-  const m = pathname.match(/^\/salary\/(\d+)-after-tax-california\/?$/);
+  // /salary/170000-after-tax-california  -> /california/170000-salary-after-tax
+  let m = pathname.match(/^\/salary\/(\d+)-after-tax-california\/?$/);
   if (m) {
     const amount = m[1];
     const url = req.nextUrl.clone();
-    url.pathname = `/california/salary/${amount}-after-tax`;
-    return NextResponse.redirect(url, 301);
+    url.pathname = `/california/${amount}-salary-after-tax`;
+    return NextResponse.redirect(url, 308);
+  }
+
+  // /california/salary/170000-after-tax -> /california/170000-salary-after-tax
+  m = pathname.match(/^\/california\/salary\/(\d+)-after-tax\/?$/);
+  if (m) {
+    const amount = m[1];
+    const url = req.nextUrl.clone();
+    url.pathname = `/california/${amount}-salary-after-tax`;
+    return NextResponse.redirect(url, 308);
   }
 
   return NextResponse.next();
 }
-
-export const config = { matcher: ["/salary/:path*"] };
