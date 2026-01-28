@@ -177,5 +177,15 @@ export function calculateCaliforniaTakeHome({ salary, filingStatus }) {
     }
   } catch (e) {}
 
-return out;
+
+  // --- Canonical output keys (used by UI/SEO pages) ---
+  out.federalTax = out.federal ?? 0;
+  out.stateTax = out.state ?? 0;
+  out.caStateTax = out.stateTax;
+  out.stateIncomeTax = out.stateTax;
+  out.takeHomePay = out.takeHome ?? 0;
+  out.caSDI = out.sdi ?? 0;
+
+  return out;
 }
+
