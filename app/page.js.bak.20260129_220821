@@ -6,7 +6,6 @@ import InternalLinks from "./components/InternalLinks";
 import { useMemo, useState } from "react";
 import { calculateCaliforniaTakeHome } from "./lib/californiaTax";
 
-import MoneyStrip from "../components/ads/MoneyStrip";
 const PAY_PERIODS = {
   annual: 1,
   monthly: 12,
@@ -359,9 +358,6 @@ export default function Home() {
             <li>FICA: ${fmtMoney2(result.fica / divisor)}</li>
             <li>CA SDI: ${fmtMoney2(result.sdi / divisor)}</li>
           </ul>
-
-          <MoneyStrip />
-
 
           {/* -------------------- GOOGLE ADSENSE -------------------- */}
           <div style={{ margin: "28px 0", textAlign: "center" }}>
