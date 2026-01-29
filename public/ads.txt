@@ -1,1 +1,3 @@
-google.com, pub-8025748227928688, DIRECT, f08c47fec0942fa0
+# Replace with your AdSense line once provided in AdSense UI.
+# Example:
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
