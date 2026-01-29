@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export default function AdSlot({
   client = "ca-pub-8025748227928688",
-  slot = "XXXXXX",
+  slot = "5511951512",
   format = "auto",
   responsive = true,
 }: {
