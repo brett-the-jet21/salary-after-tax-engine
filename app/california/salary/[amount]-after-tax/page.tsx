@@ -168,7 +168,8 @@ export default function SalaryAfterTaxPage({ params }: PageProps) {
         <p>
           Tip: If you’re comparing offers, use the full calculator to include deductions (401k/HSA) and pay frequency.
         </p>
-      </footer>
+        
+</footer>
     </main>
   );
 }
