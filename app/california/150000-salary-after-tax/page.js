@@ -140,8 +140,8 @@ export default function Page() {
 
   useEffect(() => {
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {}
+/* ADSENSE DISABLED FOR REVIEW */
+} catch (e) {}
   }, [incomeType, annualSalary, hourlyWage, hoursPerWeek, weeksPerYear, filingStatus, payPeriod]);
 
   const salaryText = Number("150000").toLocaleString();

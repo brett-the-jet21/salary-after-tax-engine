@@ -1,4 +1,3 @@
-import Script from "next/script";
 
 export const metadata = {
   metadataBase: new URL("https://www.californiasalaryaftertax.com"),
@@ -11,13 +10,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <Script
-          async
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8025748227928688"
-          crossOrigin="anonymous"
-        />
-      </head>
+  {/* ADSENSE DISABLED FOR REVIEW */}
+</head>
       <body style={{ margin: 0 }}>{children}</body>
     </html>
   );

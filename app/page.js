@@ -378,8 +378,8 @@ export default function Home() {
           <script
             dangerouslySetInnerHTML={{
               __html: `
-                (adsbygoogle = window.adsbygoogle || []).push({});
-              `
+/* ADSENSE DISABLED FOR REVIEW */
+`
             }}
           />
           {/* ------------------ END GOOGLE ADSENSE ------------------ */}
