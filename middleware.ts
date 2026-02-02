@@ -1,31 +1,56 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+// Enforce canonical host and redirect legacy URL patterns to the current canonicals.
+// Goal: eliminate 404s/duplicates that trigger AdSense + indexing issues.
 
 export const config = {
-  matcher: [
-    "/salary/:path*",
-    "/california/salary/:path*",
-  ],
+  // Run on all pages except static assets
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"],
 };
 
-export default function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+function isNumeric(x: string) {
+  return /^[0-9]+$/.test(x);
+}
 
-  // /salary/170000-after-tax-california  -> /california/170000-salary-after-tax
-  let m = pathname.match(/^\/salary\/(\d+)-after-tax-california\/?$/);
-  if (m) {
-    const amount = m[1];
-    const url = req.nextUrl.clone();
-    url.pathname = `/california/${amount}-salary-after-tax`;
-    return NextResponse.redirect(url, 308);
+export default function middleware(req: NextRequest) {
+  const url = req.nextUrl.clone();
+  const host = req.headers.get("host") || "";
+  const pathname = url.pathname;
+
+  // 1) Force www canonical (reduces "duplicate without canonical" from www vs apex)
+  // If you prefer apex, flip this logic.
+  if (host && !host.startsWith("www.")) {
+    url.hostname = "www." + host;
+    return NextResponse.redirect(url, 301);
   }
 
-  // /california/salary/170000-after-tax -> /california/170000-salary-after-tax
-  m = pathname.match(/^\/california\/salary\/(\d+)-after-tax\/?$/);
-  if (m) {
-    const amount = m[1];
-    const url = req.nextUrl.clone();
-    url.pathname = `/california/${amount}-salary-after-tax`;
-    return NextResponse.redirect(url, 308);
+  // 2) Legacy patterns → canonical salary pages
+  // /california/salary/170000-after-tax  -> /salary/170000-after-tax-california
+  const m1 = pathname.match(/^\/california\/salary\/([0-9]+)-after-tax\/?$/);
+  if (m1 && isNumeric(m1[1])) {
+    url.pathname = `/salary/${m1[1]}-after-tax-california`;
+    return NextResponse.redirect(url, 301);
+  }
+
+  // /salary/170000-after-tax -> /salary/170000-after-tax-california
+  const m2 = pathname.match(/^\/salary\/([0-9]+)-after-tax\/?$/);
+  if (m2 && isNumeric(m2[1])) {
+    url.pathname = `/salary/${m2[1]}-after-tax-california`;
+    return NextResponse.redirect(url, 301);
+  }
+
+  // /how-much-is-170000-after-tax-in-california -> /salary/170000-after-tax-california
+  const m3 = pathname.match(/^\/how-much-is-([0-9]+)-after-tax-in-california\/?$/);
+  if (m3 && isNumeric(m3[1])) {
+    url.pathname = `/salary/${m3[1]}-after-tax-california`;
+    return NextResponse.redirect(url, 301);
+  }
+
+  // /california-paycheck-calculator -> /salary (common legacy)
+  if (pathname === "/california-paycheck-calculator") {
+    url.pathname = "/salary";
+    return NextResponse.redirect(url, 301);
   }
 
   return NextResponse.next();
