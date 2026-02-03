@@ -12,7 +12,10 @@ export default function RootLayout({ children }) {
       <head>
   {/* ADSENSE DISABLED FOR REVIEW */}
 </head>
-      <body style={{ margin: 0 }}>{children}<footer style={{padding:"24px",textAlign:"center",fontSize:"14px",opacity:0.8}}>
+      <body style={{ margin: 0 }}>{children}
+        <div style={{ fontSize: "13px", color: "#666", margin: "12px 0" }}>
+          Last updated: February 2026 • Calculations by CaliforniaSalaryAfterTax.com
+        </div><footer style={{padding:"24px",textAlign:"center",fontSize:"14px",opacity:0.8}}>
   <a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy Policy</a>
 </footer>
 </body>
