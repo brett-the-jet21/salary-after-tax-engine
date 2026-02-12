@@ -1,3 +1,4 @@
+import Script from "next/script";
 
 export const metadata = {
   metadataBase: new URL("https://www.californiasalaryaftertax.com"),
@@ -10,12 +11,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-  {/* ADSENSE DISABLED FOR REVIEW */}
-</head>
-      <body style={{ margin: 0 }}>{children}
-        <div style={{ fontSize: "13px", color: "#666", margin: "12px 0" }}>
-          Last updated: February 2026 • Calculations by CaliforniaSalaryAfterTax.com
-        </div><footer style={{padding:"24px",textAlign:"center",fontSize:"14px",opacity:0.8}}>
+        <Script async strategy="afterInteractive" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8025748227928688" crossOrigin="anonymous" />
+      </head>
+      <body style={{ margin: 0 }}>{children}<footer style={{padding:"24px",textAlign:"center",fontSize:"14px",opacity:0.8}}>
   <a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy">Privacy Policy</a>
 </footer>
 </body>
