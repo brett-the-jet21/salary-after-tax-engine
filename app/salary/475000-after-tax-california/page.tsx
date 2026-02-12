@@ -1,4 +1,4 @@
-import Calculator from "../../../components/Calculator";
+import AdSenseUnit from "../../components/AdSenseUnit";
 import { calculateCaliforniaTakeHome } from "../../lib/californiaTax";
 import RelatedSalaries from "../../../components/RelatedSalaries";
 
@@ -50,6 +50,7 @@ export default function Page() {
       <p style={{ marginTop: 24, fontSize: 13, color: "#666" }}>
         Last updated: 2026
       </p>
-    </main>
+      <AdSenseUnit client="ca-pub-8025748227928688" slot="5511951512" />
+</main>
   );
 }
