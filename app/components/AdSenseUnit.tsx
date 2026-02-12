@@ -1,13 +1,24 @@
 "use client";
-import { useEffect } from "react";
+
+import React, { useEffect } from "react";
 
 declare global {
-  interface Window { adsbygoogle: any[]; }
+  interface Window {
+    adsbygoogle?: any[];
+  }
 }
 
-export default function AdSenseUnit({ client, slot, style }) {
+type AdSenseUnitProps = {
+  client: string;
+  slot: string;
+  style?: React.CSSProperties;
+};
+
+export default function AdSenseUnit({ client, slot, style }: AdSenseUnitProps) {
   useEffect(() => {
-    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch {}
   }, []);
 
   return (

@@ -1,7 +1,8 @@
-import AdSenseUnit from "../../components/AdSenseUnit";
 import { calculateCaliforniaTakeHome } from "../../lib/californiaTax";
 import RelatedSalaries from "../../../components/RelatedSalaries";
 
+import Calculator from "../../../components/Calculator";
+import AdSenseUnit from "../../components/AdSenseUnit";
 export const metadata = {
   title: "$370000 Salary After Tax in California (2026 Take-Home Pay)",
   description:
@@ -27,6 +28,10 @@ export default function Page() {
       </p>
 
       <Calculator presetSalary="370000" />
+{/* ADSENSE_INJECT_START */}
+<AdSenseUnit client="ca-pub-8025748227928688" slot="5511951512" />
+{/* ADSENSE_INJECT_END */}
+
 
       
 
