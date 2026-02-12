@@ -1,3 +1,5 @@
+"use client";
+import AdSenseUnit from "../../components/AdSenseUnit";
 import { redirect, notFound } from "next/navigation";
 
 type Props = { params: { slug: string } };
