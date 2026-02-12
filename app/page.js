@@ -1,4 +1,5 @@
 "use client";
+import AdSenseUnit from "./components/AdSenseUnit";
 import AdSlot from "./components/AdSlot";
 import FAQSchema from "./components/FAQSchema";
 import InternalLinks from "./components/InternalLinks";
