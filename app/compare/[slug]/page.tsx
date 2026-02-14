@@ -1,3 +1,6 @@
+export const dynamic = "force-static";
+export const revalidate = 86400;
+
 import Link from "next/link";
 
 const STATE_LABEL: Record<string, string> = {
