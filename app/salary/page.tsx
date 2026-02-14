@@ -70,6 +70,31 @@ export default function SalaryIndexPage() {
         Note: Estimates may vary based on deductions, credits, benefits, and other
         factors. This tool provides approximations for informational purposes.
       </p>
+
+      {/* COMPARE_LINKS_START */}
+      <section className="mt-10 rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+        <h2 className="text-xl font-semibold">Popular salary comparisons</h2>
+        <p className="mt-1 text-sm text-black/70">These pages compare take-home pay differences driven by state taxes.</p>
+        <ul className="mt-3 list-disc pl-5 space-y-1">
+          <li>
+            <Link className="underline" href="/compare/california-vs-texas-salary-after-tax">
+              California vs Texas salary after tax
+            </Link>
+          </li>
+          <li>
+            <Link className="underline" href="/compare/california-vs-florida-salary-after-tax">
+              California vs Florida salary after tax
+            </Link>
+          </li>
+          <li>
+            <Link className="underline" href="/compare/california-vs-washington-salary-after-tax">
+              California vs Washington salary after tax
+            </Link>
+          </li>
+        </ul>
+      </section>
+      {/* COMPARE_LINKS_END */}
+
     </main>
-  );
+);
 }
