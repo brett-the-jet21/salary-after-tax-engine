@@ -1,5 +1,6 @@
 import { calculateCaliforniaTakeHome } from "../../lib/californiaTax";
 import RelatedSalaries from "../../../components/RelatedSalaries";
+import ClientOnlyAdUnit from "../../../components/ads/ClientOnlyAdUnit";
 
 import Calculator from "../../../components/Calculator";
 import AdSenseUnit from "../../components/AdSenseUnit";
@@ -21,6 +22,8 @@ export default function Page() {
     <main style={{ maxWidth: 820, margin: "0 auto", padding: 24 }}>
       <h1>$65000 Salary After Tax in California</h1>
 
+      <ClientOnlyAdUnit slot="salary-above-fold" minHeight={280} />
+
       <p>
         If your annual salary is <strong>$65000</strong> in California, your
         actual take-home pay depends on federal income tax, California state tax,
@@ -33,10 +36,11 @@ export default function Page() {
 {/* ADSENSE_INJECT_END */}
 
 
-      
+      <ClientOnlyAdUnit slot="salary-mid-content" minHeight={250} />
 
       <RelatedSalaries salary={65000} />
-<h2>California tax breakdown</h2>
+
+      <h2>California tax breakdown</h2>
       <p>
         California uses progressive income tax brackets. Higher portions of your
         income are taxed at higher rates, while payroll taxes are withheld
